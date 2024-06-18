@@ -1,5 +1,8 @@
 ### README.md
 
+## By
+Raz Tsook
+
 # Grouping Patent Texts for Mobile Communication Analysis
 
 ## Objective
