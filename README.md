@@ -1,9 +1,10 @@
 ### README.md
 
+# Grouping Patent Texts for Mobile Communication Analysis
+
 ## By
 Raz Tsook
 
-# Grouping Patent Texts for Mobile Communication Analysis
 
 ## Objective
 Our goal is to better understand competition in the mobile communications sector by studying patent claims. We have created a method to group patent claims into clear topics and use this method in a simple interactive tool. This tool lets users pick how many groups they want and shows the names and number of claims in each group.
