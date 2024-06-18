@@ -7,7 +7,9 @@ Raz Tsook
 
 
 ## Objective
-Our goal is to better understand competition in the mobile communications sector by studying patent claims. We have created a method to group patent claims into clear topics and use this method in a simple interactive tool. This tool lets users pick how many groups they want and shows the names and number of claims in each group.
+This project provides a web application that clusters patent claims using BERT embeddings with K-Means clustering.
+
+The goal of this project is to better understand competition in the mobile communications sector by studying patent claims. We created a method to group patent claims into clear topics and built an interactive tool for this purpose. This tool allows users to select the number of groups they want, and it displays the name and number of claims in each group.
 
 ## Tasks
 
@@ -66,7 +68,7 @@ pip install -r requirements.txt
 ### Running the Web Application
 1. Navigate to the application directory:
     ```bash
-    cd app
+    cd ML - Task
     ```
 2. Run the application:
     ```bash
@@ -75,24 +77,22 @@ pip install -r requirements.txt
 3. Open your web browser and go to `http://127.0.0.1:5000` to interact with the application.
 
 ### Example Usage
-To see the groups with a specific number of claims, you can use an endpoint like this:
-```
-http://127.0.0.1:5000/groups?number_of_groups=3
-```
+To see the groups with a specific number of claims, you can use the input field on the main page of the web application. Enter the desired number of groups and click "Submit."
 
 ## Project Structure
 ```
 ML - Task/
 │
 ├── myenv/                   # Virtual environment directory
+├── .gitignore               # Git ignore file
 ├── analysis.ipynb           # Jupyter notebook with research and analysis
-├── app/
-│   ├── app.py               # Main application file
-│   ├── templates/
-│   │   └── index.html       # HTML template for the web app
-├── requirements.txt         # List of dependencies
+├── app.py                   # Main application file
+├── index.html               # HTML template for the web app
+├── kmeans_bert_model.pkl    # Trained KMeans model saved as a pickle file
+├── kmeans_bert_model.py     # Script to train the KMeans model
 ├── README.md                # Project instructions and setup guide
-└── .gitignore               # Git ignore file
+└── requirements.txt         # List of dependencies
+
 ```
 
 ## Python Version
