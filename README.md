@@ -1,5 +1,3 @@
-Got it! I'll revise the README to remove the redundant task instructions and provide more relevant content.
-
 ### README.md
 
 ```markdown
@@ -117,7 +115,3 @@ The project is well-documented with:
 ### Note
 The application's user interface is simple and text-based, as the focus is on functionality rather than UI design.
 
-## Good Luck!
-```
-
-You can copy this text into a file named `README.md` in the root directory of your project. This version provides clear and comprehensive instructions for setting up and running your project, along with answers to the evaluation criteria questions.
