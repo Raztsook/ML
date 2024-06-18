@@ -1,6 +1,5 @@
 ### README.md
 
-```markdown
 # Grouping Patent Texts for Mobile Communication Analysis
 
 ## Objective
@@ -40,7 +39,7 @@ Our goal is to better understand competition in the mobile communications sector
 ```bash
 git clone https://github.com/Raztsook/ML.git
 cd ML
-```
+
 
 ### Create a Virtual Environment
 ```bash
