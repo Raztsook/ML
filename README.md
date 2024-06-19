@@ -5,9 +5,8 @@
 ## By
 Raz Tsook
 
-## Project Brief
-
-This project focuses on extracting text from patent websites, comparing various clustering methods, and implementing the chosen model in a web application. Here is a step-by-step overview of the process:
+## Description
+This project extracts text from patent websites, compares clustering methods, and provides an application to group patent claims.
 
 1. **Extracting Patent Claims**:
    - I started by extracting the text of patent claims from Google Patents websites using web scraping techniques. This involved parsing the HTML content of the patent pages to retrieve the claims.
@@ -30,49 +29,6 @@ This project focuses on extracting text from patent websites, comparing various 
 
 This workflow ensures that I have a robust method for clustering patent claims and a user-friendly interface for interacting with the clustered data.
 
-## Setup Instructions
-
-### Prerequisites
-- Python 3.8 or later
-- Git
-
-### Clone the Repository
-```bash
-git clone https://github.com/Raztsook/ML.git
-cd ML
-
-
-### Create a Virtual Environment
-```bash
-python -m venv myenv
-source myenv/bin/activate  # On Windows use `myenv\Scripts\activate`
-```
-
-### Install the Requirements
-```bash
-pip install -r requirements.txt
-```
-
-### Running the Jupyter Notebook
-1. Open Jupyter Notebook:
-    ```bash
-    jupyter notebook
-    ```
-2. Open `analysis.ipynb` and run the cells to see the experiments with different models for grouping paragraphs.
-
-### Running the Web Application
-1. Navigate to the application directory:
-    ```bash
-    cd ML - Task
-    ```
-2. Run the application:
-    ```bash
-    python app.py
-    ```
-3. Open your web browser and go to `http://127.0.0.1:5000` to interact with the application.
-
-### Example Usage
-To see the groups with a specific number of claims, you can use the input field on the main page of the web application. Enter the desired number of groups and click "Submit."
 
 ## Project Structure
 ```
@@ -93,6 +49,46 @@ ML - Task/
 
 ## Python Version
 This project was developed using Python 3.8.
+
+## Installation Steps
+
+1. **Clone the repository**
+
+    ```sh
+    git clone https://github.com/Raztsook/ML.git
+    cd ML
+    ```
+
+2. **Create and activate a virtual environment**
+
+    ```sh
+    python3 -m venv myenv
+    source myenv/bin/activate  # On Windows use `myenv\Scripts\activate`
+    ```
+
+3. **Install the required packages**
+
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+4. **Run the application**
+
+    ```sh
+    python app.py
+    ```
+
+## Running the Application
+
+After completing the above steps, you can run the application by navigating to the project directory and executing the following command:
+
+```sh
+python app.py
+
+
+### Example Usage
+To see the groups with a specific number of claims, you can use the input field on the main page of the web application. Enter the desired number of groups and click "Submit."
+
 
 ## Evaluation Criteria
 
