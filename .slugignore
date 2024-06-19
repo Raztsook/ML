@@ -1,6 +1,0 @@
-myenv/
-.git/
-.vscode/
-*.log
-*.tmp
-*.pkl
