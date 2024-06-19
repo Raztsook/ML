@@ -1,9 +1,6 @@
-*.pyc
-*.pyo
-*.pyd
-__pycache__
-*.pkl
-*.tmp
 myenv/
-requirements.txt
-notebook.ipynb
+.git/
+.vscode/
+*.log
+*.tmp
+*.pkl
