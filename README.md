@@ -78,7 +78,7 @@ This project was developed using Python 3.8.
     python app.py
     ```
 
-## Running the Application
+## Running the Application Localy
 
 After completing the above steps, you can run the application by navigating to the project directory and executing the following command:
 

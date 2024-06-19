@@ -1,6 +1,5 @@
 Flask
 Werkzeug
-joblib
 numpy
 scikit-learn
 sentence-transformers
