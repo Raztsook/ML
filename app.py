@@ -28,10 +28,10 @@ def get_cluster_titles_lda(claims, labels, n_clusters):
         cluster_claims = [claims[j] for j in range(len(claims)) if labels[j] == i]
         if len(cluster_claims) < 2:
             # Assign a default title if the cluster has too few documents
-            cluster_titles.append(f"Cluster {i+1}")
+            cluster_titles.append(cluster_claims[0] if len(cluster_claims) == 1 else f"Cluster {i+1}")
             continue
         # Vectorize the claims in the current cluster
-        count_vectorizer = CountVectorizer(max_df=0.85, min_df=1, stop_words='english')
+        count_vectorizer = CountVectorizer(max_df=1.0, min_df=1, stop_words='english')
         term_matrix = count_vectorizer.fit_transform(cluster_claims)
         # Apply LDA to find the most representative terms
         lda = LatentDirichletAllocation(n_components=1, random_state=42)
