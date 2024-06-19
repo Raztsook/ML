@@ -1,5 +1,6 @@
-myenv/
-notebook.ipynb
-*.ipynb
-deactivate.sh
-.gitignore
+notebooks/
+data/
+*.csv
+*.json
+test/
+*.md
