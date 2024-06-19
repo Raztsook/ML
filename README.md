@@ -104,7 +104,7 @@ The methods used for grouping patent claims involve experimenting with different
 ### Documentation
 The project is well-documented with:
 - A detailed README file that includes setup and running instructions.
-- A Jupyter notebook (`analysis.ipynb`) that outlines the research and analysis conducted.
+- A Jupyter notebook (`notebook.ipynb`) that outlines the research and analysis conducted.
 - Clear and concise comments within the code to explain the functionality.
 
 ### Note
