@@ -32,7 +32,7 @@ This workflow ensures that I have a robust method for clustering patent claims a
 
 ## Project Structure
 ```
-ML-Task/
+ML/
 │
 ├── myenv/ # Virtual environment directory
 ├── .gitignore # Git ignore file
@@ -72,19 +72,13 @@ This project was developed using Python 3.8.
     pip install -r requirements.txt
     ```
 
-4. **Run the application**
+4. **Run the application Locally**
+
+After completing the above steps, you can run the application by navigating to the project directory and executing the following command:
 
     ```sh
     python app.py
     ```
-
-## Running the Application Locally
-
-After completing the above steps, you can run the application by navigating to the project directory and executing the following command:
-
-```sh
-python app.py
- ```
 
 ### Example Usage
 To see the groups with a specific number of claims, you can use the input field on the main page of the web application. Enter the desired number of groups and click "Submit."
