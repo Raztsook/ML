@@ -1,39 +1,34 @@
 ### README.md
 
-# Grouping Patent Texts for Mobile Communication Analysis
+# Patent Claims Clustering Project
 
 ## By
 Raz Tsook
 
+## Project Brief
 
-## Objective
-This project provides a web application that clusters patent claims using BERT embeddings with K-Means clustering.
+This project focuses on extracting text from patent websites, comparing various clustering methods, and implementing the chosen model in a web application. Here is a step-by-step overview of the process:
 
-The goal of this project is to better understand competition in the mobile communications sector by studying patent claims. We created a method to group patent claims into clear topics and built an interactive tool for this purpose. This tool allows users to select the number of groups they want, and it displays the name and number of claims in each group.
+1. **Extracting Patent Claims**:
+   - I started by extracting the text of patent claims from Google Patents websites using web scraping techniques. This involved parsing the HTML content of the patent pages to retrieve the claims.
 
-## Tasks
+2. **Comparing Clustering Methods**:
+   - I compared three different clustering methods:
+     1. **KNN (K-Nearest Neighbors)**
+     2. **LDA (Latent Dirichlet Allocation)**
+     3. **BERT Embeddings with K-Means Clustering**
+   - I analyzed the results of these methods to determine which provided the best clustering performance for my text data.
 
-### Task 1: Extracting Text from Patents
-- **Goal:** Extract claims from three patents related to mobile communications.
-- **Instructions:**
-  - Choose three patents relevant to mobile communications.
-  - Focus on extracting just the claims text.
-  - **Bonus:** Automate this process using a tool like BeautifulSoup.
+3. **Selecting the Best Model**:
+   - Based on my analysis, I selected the **BERT Embeddings with K-Means Clustering** model as it provided the best results in terms of clustering performance.
 
-### Task 2: Grouping Claims by Topic
-- **Goal:** Use different models to group claims by similar topics.
-- **Instructions:**
-  - Experiment with three different methods or models for grouping paragraphs in a Jupyter notebook (e.g., clustering algorithms, text generation).
-  - Show the results of the grouping with a number of groups you define.
-  - Compare these methods and select the best one for the next task. Explain why this method was chosen, focusing on its effectiveness and suitability for the task.
+4. **Preparing Files for the Application**:
+   - After choosing the best model, I prepared the necessary files that would be used by the web application. This involved generating BERT embeddings for the patent claims and saving these embeddings and the claims to files.
 
-### Task 3: Creating an Interactive Application
-- **Goal:** Build a basic web application that uses your chosen grouping method.
-- **Instructions:**
-  - Use a web framework (like Flask, Django, or FastAPI) to build the application.
-  - Add your paragraph grouping method to the app.
-  - Let users choose how many groups they want.
-  - Show the names of the groups and how many claims each has.
+5. **Implementing the Web Application**:
+   - I uploaded the prepared files to Aplitzkia and created a web application using Flask. The application allows users to specify the number of clusters they want and provides meaningful titles for each cluster using LDA topic modeling.
+
+This workflow ensures that I have a robust method for clustering patent claims and a user-friendly interface for interacting with the clustered data.
 
 ## Setup Instructions
 
@@ -83,15 +78,16 @@ To see the groups with a specific number of claims, you can use the input field 
 ```
 ML - Task/
 │
-├── myenv/                   # Virtual environment directory
-├── .gitignore               # Git ignore file
-├── analysis.ipynb           # Jupyter notebook with research and analysis
-├── app.py                   # Main application file
-├── index.html               # HTML template for the web app
-├── kmeans_bert_model.pkl    # Trained KMeans model saved as a pickle file
-├── kmeans_bert_model.py     # Script to train the KMeans model
-├── README.md                # Project instructions and setup guide
-└── requirements.txt         # List of dependencies
+├── myenv/ # Virtual environment directory
+├── .gitignore # Git ignore file
+├── notebook.ipynb # Jupyter notebook for training the model and preparing data
+├── app.py # Main application file
+├── templates/ # Directory for HTML templates
+│ └── index.html # HTML template for the web app
+├── embeddings.npy # Numpy file with BERT embeddings for the claims
+├── claims.txt # Text file with the extracted patent claims
+├── README.md # Project instructions and setup guide
+└── requirements.txt # List of dependencies
 
 ```
 

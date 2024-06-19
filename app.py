@@ -1,91 +1,82 @@
-from flask import Flask, request, jsonify, send_from_directory
+import os
+from flask import Flask, request, jsonify, render_template
 import joblib
-from sentence_transformers import SentenceTransformer
+import numpy as np
 from sklearn.cluster import KMeans
-from sklearn.feature_extraction.text import TfidfVectorizer
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+from sentence_transformers import SentenceTransformer
 
-app = Flask(__name__, static_folder='.', static_url_path='')
+# Set the environment variable to disable the tokenizers parallelism warning
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-# Load pre-trained model
-bert_model = SentenceTransformer('all-MiniLM-L6-v2')
-kmeans_model = joblib.load('kmeans_bert_model.pkl')  # Ensure this is saved from your previous training
+# Initialize the Flask application
+app = Flask(__name__)
 
-def get_patent_claims(patent_number):
-    url = f"https://patents.google.com/patent/{patent_number}/en"
-    response = requests.get(url)
+# Load pre-trained SentenceTransformer model for generating embeddings
+vectorizer = SentenceTransformer('all-MiniLM-L6-v2')
 
-    if response.status_code != 200:
-        print(f"Failed to retrieve page for {patent_number}")
-        return []
+# Load previously saved embeddings and claims
+embeddings = np.load('embeddings.npy')
+with open('claims.txt', 'r') as f:
+    claims = f.readlines()
 
-    soup = BeautifulSoup(response.content, 'html.parser')
-
-    # Find the claims section by looking for divs with the class 'claim'
-    claims_section = soup.find('section', {'itemprop': 'claims'})
-
-    if not claims_section:
-        print(f"No claims section found for {patent_number}")
-        return []
-
-    # Extract the text of each claim inside the 'claim-text' divs
-    claims_text = []
-    for claim in claims_section.find_all('div', class_='claim'):
-        claim_text_div = claim.find('div', class_='claim-text')
-        if claim_text_div:
-            claims_text.append(claim_text_div.get_text(separator=' ', strip=True))
-
-    return claims_text
-
-def get_top_keywords(clusters, labels, n_terms):
-    vectorizer = TfidfVectorizer(stop_words='english')
-    vec_data = vectorizer.fit_transform(clusters)
-    terms = vectorizer.get_feature_names_out()
-    
-    df = pd.DataFrame(vec_data.toarray(), columns=terms)
-    
-    top_keywords = {}
-    
-    for i in range(len(set(labels))):
-        cluster_terms = df.iloc[labels == i].sum().sort_values(ascending=False).head(n_terms)
-        top_keywords[i] = cluster_terms.index.tolist()
-    
-    return top_keywords
+# Function to generate cluster titles using LDA topic modeling
+def get_cluster_titles_lda(claims, labels, n_clusters):
+    cluster_titles = []
+    for i in range(n_clusters):
+        # Extract claims belonging to the current cluster
+        cluster_claims = [claims[j] for j in range(len(claims)) if labels[j] == i]
+        if len(cluster_claims) < 2:
+            # Assign a default title if the cluster has too few documents
+            cluster_titles.append(f"Cluster {i+1}")
+            continue
+        # Vectorize the claims in the current cluster
+        count_vectorizer = CountVectorizer(max_df=0.85, min_df=1, stop_words='english')
+        term_matrix = count_vectorizer.fit_transform(cluster_claims)
+        # Apply LDA to find the most representative terms
+        lda = LatentDirichletAllocation(n_components=1, random_state=42)
+        lda.fit(term_matrix)
+        terms = count_vectorizer.get_feature_names_out()
+        topic_words = lda.components_[0]
+        top_words_idx = topic_words.argsort()[-10:]
+        top_words = [terms[idx] for idx in top_words_idx]
+        # Create a title from the top words
+        cluster_titles.append(" ".join(top_words))
+    return cluster_titles
 
 @app.route('/')
-def index():
-    return send_from_directory('.', 'index.html')
+def home():
+    # Render the home page with the input form
+    return render_template('index.html')
 
-@app.route('/group_claims', methods=['GET'])
+@app.route('/group', methods=['POST'])
 def group_claims():
-    num_groups = int(request.args.get('groups', 3))
-    patent_numbers = ['GB2478972A', 'US9634864B2', 'US9980046B2']
-    all_claims = []
-
-    for patent_number in patent_numbers:
-        claims = get_patent_claims(patent_number)
-        all_claims.extend(claims)
-
-    embeddings = bert_model.encode(all_claims)
+    # Get the number of clusters requested by the user
+    n_groups = int(request.form.get('groups'))
     
-    # Fit KMeans with the specified number of clusters
-    kmeans_model.set_params(n_clusters=num_groups)
-    labels = kmeans_model.fit_predict(embeddings)
+    # Fit KMeans with the requested number of clusters
+    kmeans = KMeans(n_clusters=n_groups, random_state=42)
+    labels = kmeans.fit_predict(embeddings)
     
-    # Get top keywords for each cluster
-    top_keywords = get_top_keywords(all_claims, labels, 1)  # Adjust the number of keywords as needed
+    # Count the number of claims in each cluster
+    group_counts = np.bincount(labels)
     
-    groups = {}
-    for i in range(num_groups):
-        groups[i] = {'title': ', '.join(top_keywords[i]), 'claims': []}
+    # Generate titles for each cluster using LDA
+    cluster_titles = get_cluster_titles_lda(claims, labels, n_groups)
     
-    for label, claim in zip(labels, all_claims):
-        groups[label]['claims'].append(claim)
+    # Create a response with cluster titles and claim counts
+    response = {'groups': []}
+    for i in range(n_groups):
+        group_info = {
+            'title': cluster_titles[i],
+            'number_of_claims': int(group_counts[i])
+        }
+        response['groups'].append(group_info)
     
-    response = [{'title': group['title'], 'number_of_claims': len(group['claims'])} for group in groups.values()]
-    return jsonify({'groups': response})
+    # Return the response as JSON
+    return jsonify(response)
 
 if __name__ == '__main__':
+    # Run the Flask application
     app.run(debug=True)
