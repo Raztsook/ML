@@ -1,6 +1,9 @@
-notebooks/
-data/
-*.csv
-*.json
-test/
-*.md
+*.pyc
+*.pyo
+*.pyd
+__pycache__
+*.pkl
+*.tmp
+myenv/
+requirements.txt
+notebook.ipynb
