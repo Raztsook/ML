@@ -84,7 +84,7 @@ After completing the above steps, you can run the application by navigating to t
 
 ```sh
 python app.py
-
+ ```
 
 ### Example Usage
 To see the groups with a specific number of claims, you can use the input field on the main page of the web application. Enter the desired number of groups and click "Submit."
