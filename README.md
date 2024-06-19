@@ -32,7 +32,7 @@ This workflow ensures that I have a robust method for clustering patent claims a
 
 ## Project Structure
 ```
-ML - Task/
+ML-Task/
 │
 ├── myenv/ # Virtual environment directory
 ├── .gitignore # Git ignore file
@@ -78,7 +78,7 @@ This project was developed using Python 3.8.
     python app.py
     ```
 
-## Running the Application Localy
+## Running the Application Locally
 
 After completing the above steps, you can run the application by navigating to the project directory and executing the following command:
 
