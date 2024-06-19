@@ -6,4 +6,7 @@ myenv/
 *.log
 *.tmp
 *.pkl
+
+# Ignore all HTML files except those in the templates directory
 *.html
+!templates/*.html
